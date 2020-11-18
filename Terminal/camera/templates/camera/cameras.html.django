@@ -1,0 +1,30 @@
+{% extends "main/base.html.django" %}
+{% block content %}
+  <main role="main" class="container">
+    <div class="row" id="winbox">
+      <div class="col-md-8">
+        <legend class="border-bottom mb-4">Logged ind som {{username}}</legend>
+        <table class="float-right">
+          <tr>
+            <td>
+        <button type="button" class="btn btn-outline-info float-right" onclick="home()">Hovedmenu</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button type="button" class="btn btn-outline-info float-right" onclick="addCam()">Tilføj kamera</button>
+      </td>
+    </tr>
+      </table>
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript">
+  function home() {
+    window.location.href = "{% url 'home' %}";
+  }
+  function addCam() {
+    window.location.href = "{% url 'addCam' %}";
+  }
+  </script>
+{% endblock content %}

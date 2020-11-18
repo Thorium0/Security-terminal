@@ -8,6 +8,6 @@
     </div>
   </main>
   <script type="text/javascript">
-    setTimeout(window.location.href = "{% url 'login' %}", 1000);
+    setTimeout(window.location.href = "{% url 'login' %}", 2000);
   </script>
 {% endblock content %}

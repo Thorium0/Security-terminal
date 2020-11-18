@@ -27,7 +27,6 @@ def doLogin():
 
 
             camera.resolution = (160, 120)
-            sleep(2)
             camera.capture(os.path.join(mediaUrl, "cap.jpg"))
             img2 = face_recognition.load_image_file(os.path.join(mediaUrl, "cap.jpg"))
             encoding2 = face_recognition.face_encodings(img2)
@@ -46,8 +45,6 @@ def doLogin():
 
 
 def login(request):
-
-
     username = doLogin()
     if username:
         user = User.objects.get(username=username)

@@ -1,0 +1,41 @@
+{% extends "main/base.html.django" %}
+{% block content %}
+{% load crispy_forms_tags %}
+  <main role="main" class="container">
+    <div class="row" id="winbox">
+      <div class="col-md-8">
+        <legend class="border-bottom mb-4">Logged ind som {{username}}</legend>
+        <table class="float-right">
+          <tr>
+            <td>
+        <button type="button" class="btn btn-outline-info float-right" onclick="home()">Hovedmenu</button>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <button type="button" class="btn btn-outline-info float-right" onclick="back()">Tilbage</button>
+        </td>
+        </tr>
+        </table>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript">
+  function back() {
+    window.location.href = "{% url 'cameras' %}";
+  }
+  function home() {
+    window.location.href = "{% url 'home' %}";
+  }
+  </script>
+{% endblock content %}

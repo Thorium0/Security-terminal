@@ -3,16 +3,21 @@
   <main role="main" class="container">
     <div class="row" id="winbox">
       <div class="col-md-8">
-        <legend class="border-bottom mb-4"> Velkommen {{username}}</legend>
+        <legend class="border-bottom mb-4"> Logged ind som {{username}}</legend>
+        <table class="float-right">
+          <tr>
+            <td>
         <button type="button" class="btn btn-outline-info float-right" onclick="logout()">Logout</button>
-        <button type="button" class="btn btn-outline-info btn-square" onclick="test()">Cameras</button>
-
+      </td>
+    </tr>
+      </table>
+<button type="button" class="btn btn-outline-info btn-square" onclick="cameras()">Cameras</button>
       </div>
     </div>
   </main>
   <script type="text/javascript">
-  function test() {
-    alert("nice!");
+  function cameras() {
+    window.location.href = "{% url 'cameras' %}";
   }
 
   function logout() {
