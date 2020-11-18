@@ -3,13 +3,20 @@
   <main role="main" class="container">
     <div class="row" id="winbox">
       <div class="col-md-8">
+        <legend class="border-bottom mb-4"> Velkommen {{username}}</legend>
+        <button type="button" class="btn btn-outline-info float-right" onclick="logout()">Logout</button>
         <button type="button" class="btn btn-outline-info btn-square" onclick="test()">Cameras</button>
+
       </div>
-      </div>
+    </div>
   </main>
   <script type="text/javascript">
   function test() {
-    alert("nice!")
+    alert("nice!");
+  }
+
+  function logout() {
+    window.location.href = "{% url 'logout' %}";
   }
   </script>
 {% endblock content %}

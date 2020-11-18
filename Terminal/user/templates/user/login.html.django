@@ -1,0 +1,13 @@
+{% extends "main/base.html.django" %}
+{% block content %}
+  <main role="main" class="container">
+    <div class="row" id="winbox">
+      <div class="col-md-8">
+        <h1>Please show your face.</h1>
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript">
+    setTimeout(window.location.href = "{% url 'login' %}", 1000);
+  </script>
+{% endblock content %}
