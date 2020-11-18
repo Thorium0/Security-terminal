@@ -6,6 +6,7 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
+from time import sleep
 
 
 # initialize GPIO
@@ -13,33 +14,36 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.cleanup()
 
-# read data using pin 14
+# read data using pin 12
 instance = dht11.DHT11(pin = 12)
 
 
-tempra = ""
-
 
 PAGE="""\
-<html>
+<html style="width: 640px; height: 480px;">
 <head>
 <title>Raspberry Pi - Surveillance Camera</title>
 </head>
-<body>
-<center><h1>Raspberry Pi - Surveillance Camera</h1></center>
-<center><img src="stream.mjpg" width="640" height="480"></center>
-<div id="tempElm"></div>
+<body style="margin:0">
+<div class="container">
+<img src="stream.mjpg" width="640" height="480">
+<div style="position: absolute; top: 8px; left: 16px; color: white; font-size: 24px">
+<p id="tempElm">Getting temperature...</p>
+</div>
+</div>
 <script type="text/javascript">
   var tempUrl = "/temp.html";
   var temp;
-  
+
 
   function getTemp() {
     fetch(tempUrl)
       .then(function(response) {
         response.text().then(function(text) {
           temp = text
+          if (temp != "0") {
           tempDone();
+          }
         });
       });
   }
@@ -47,7 +51,7 @@ PAGE="""\
 
     function tempDone() {
       document.getElementById('tempElm').textContent = temp;
-    } 
+    }
 
 function myLoop() {
   setTimeout(function() {
@@ -117,12 +121,8 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                     'Removed streaming client %s: %s',
                     self.client_address, str(e))
         elif self.path == "/temp.html":
-            if instance.read().temperature != 0:
-                cjode = str(instance.read().temperature)
-                tempra = cjode
-                content = cjode.encode("utf-8")
-            else:
-                content = tempra.encode("utf-8")
+            cjode = str(instance.read().temperature)
+            content = cjode.encode("utf-8")
             self.send_response(200)
             self.send_header('Content-Type', 'text/html')
             self.end_headers()
