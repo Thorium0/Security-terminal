@@ -14,11 +14,9 @@ def logout(request):
     return redirect("login")
 
 encodings = []
-camera = PiCamera()
-
 
 def doLogin():
-
+            camera = PiCamera()
             mediaUrl = os.path.join(os.path.dirname(__file__), "static", "user")
             names = ["Troels", "Anders", "Alexander"]
             if len(encodings) < 1:
