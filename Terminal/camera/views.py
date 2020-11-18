@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import Camera
 from .forms import CameraAddForm
-import os
+import os, signal
 
 
 @login_required
@@ -12,10 +13,18 @@ def home(request):
         username = request.user.username
     context = {
     "username" : username,
-    "title" : "Cameras"
+    "title" : "Cameras",
+    "cameras": Camera.objects.all()
     }
     return render(request, 'camera/cameras.html.django', context)
 
+@login_required
+def removeCam(request, id):
+    try: camera = Camera.objects.get(id=id)
+    except: pass
+    else:
+        camera.delete()
+    return redirect("cameras")
 
 
 @login_required()
@@ -31,7 +40,7 @@ def addCam(request):
             else:
                 messages.success(request, "Camera tilføjet!")
                 #pid = os.system("pidof matchbox-keyboard")
-                #os.system("kill "+str(pid))
+                #os.kill(pid, signal.SIGSTOP)
         return redirect('cameras')
 
     else:

@@ -16,7 +16,9 @@ def logout(request):
 encodings = []
 camera = PiCamera()
 
+
 def doLogin():
+
             mediaUrl = os.path.join(os.path.dirname(__file__), "static", "user")
             names = ["Troels", "Anders", "Alexander"]
             if len(encodings) < 1:
@@ -28,6 +30,7 @@ def doLogin():
 
             camera.resolution = (160, 120)
             camera.capture(os.path.join(mediaUrl, "cap.jpg"))
+            camera.close()
             img2 = face_recognition.load_image_file(os.path.join(mediaUrl, "cap.jpg"))
             encoding2 = face_recognition.face_encodings(img2)
             if len(encoding2) < 1:

@@ -16,10 +16,29 @@
       </td>
     </tr>
       </table>
+        {% if cameras %}
+        <table>
+          {% for camera in cameras %}
+          <tr>
+            <td>
+              <label>Kamera: {{camera.title}} - Adresse: {{camera.ip}}</label>
+              <button type="button" class="btn btn-outline-info float-right redBtn" onclick="removeCam({{camera.id}})">Fjern</button>
+              <iframe width="644px" height="484px" src="{{camera.ip}}"></iframe>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+         {% endif %}
       </div>
     </div>
   </main>
   <script type="text/javascript">
+  function removeCam(id) {
+    var confirmed = confirm("Er du sikker på du ville slette dette kamera?");
+    if (confirmed) {
+      window.location.href = "{% url 'removeCam' 0 %}".replace(/0/, id);
+    }
+  }
   function home() {
     window.location.href = "{% url 'home' %}";
   }
