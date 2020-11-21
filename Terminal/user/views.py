@@ -16,33 +16,33 @@ def logout(request):
 encodings = []
 
 def doLogin():
-            camera = PiCamera()
-            mediaUrl = os.path.join(os.path.dirname(__file__), "static", "user")
-            names = ["Troels", "Anders", "Alexander"]
-            if len(encodings) < 1:
-                faces = [name.lower()+".jpg" for name in names]
-                for face in faces:
-                    img1 = face_recognition.load_image_file(os.path.join(mediaUrl, face))
-                    encodings.append(face_recognition.face_encodings(img1)[0])
+    camera = PiCamera()
+    mediaUrl = os.path.join(os.path.dirname(__file__), "static", "user")
+    names = ["Troels", "Anders", "Alexander"]
+    if len(encodings) < 1:
+        faces = [name.lower()+".jpg" for name in names]
+        for face in faces:
+            img1 = face_recognition.load_image_file(os.path.join(mediaUrl, face))
+            encodings.append(face_recognition.face_encodings(img1)[0])
 
 
-            camera.resolution = (160, 120)
-            camera.capture(os.path.join(mediaUrl, "cap.jpg"))
-            camera.close()
-            img2 = face_recognition.load_image_file(os.path.join(mediaUrl, "cap.jpg"))
-            encoding2 = face_recognition.face_encodings(img2)
-            if len(encoding2) < 1:
-                return False
-            else:
-                encoding2 = encoding2[0]
+    camera.resolution = (160, 120)
+    camera.capture(os.path.join(mediaUrl, "cap.jpg"))
+    camera.close()
+    img2 = face_recognition.load_image_file(os.path.join(mediaUrl, "cap.jpg"))
+    encoding2 = face_recognition.face_encodings(img2)
+    if len(encoding2) < 1:
+        return False
+    else:
+        encoding2 = encoding2[0]
 
-            for x in range(len(encodings)):
-                results = face_recognition.compare_faces([encodings[x]], encoding2)
-                if results[0] == True:
-                    username = names[x]
-                    return username
-                else:
-                    return False
+    for x in range(len(encodings)):
+        results = face_recognition.compare_faces([encodings[x]], encoding2)
+        if results[0] == True:
+            username = names[x]
+            return username
+        else:
+            return False
 
 
 def login(request):
